@@ -4,22 +4,22 @@ import { ProductType, StateProps } from "../../type";
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import FormattedPrice from "./FormattedPrice";
-// import { useDispatch, useSelector } from "react-redux";
-// import { addToCart, addToFavorite } from "@/redux/proSlice";
-// import toast, { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, addToFavorite } from "@/redux/proSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 interface Item {
   products: ProductType[];
 }
 
 const Product = ({ products }: Item) => {
-  //   const { favoriteData } = useSelector((state: StateProps) => state.pro);
+  const { favoriteData } = useSelector((state: StateProps) => state.pro);
 
-  //   const isFavorite = (productId: any) => {
-  // return favoriteData.some((favoriteItem) => favoriteItem._id === productId);
-  //   };
+  const isFavorite = (productId: any) => {
+    return favoriteData.some((favoriteItem) => favoriteItem._id === productId);
+  };
 
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-10">
       {products.map((item) => (
@@ -37,15 +37,15 @@ const Product = ({ products }: Item) => {
             />
           </Link>
           <Heart
-            // fill={isFavorite(item._id) ? "red" : "black"}
-            // onClick={() => {
-            //   dispatch(addToFavorite(item));
-            //   if (isFavorite(item?._id)) {
-            // toast.error(`${item.title} removed from favorites!`);
-            //   } else {
-            // toast.success(`${item.title} added to favorites!`);
-            //   }
-            // }}
+            fill={isFavorite(item._id) ? "red" : "black"}
+            onClick={() => {
+              dispatch(addToFavorite(item));
+              if (isFavorite(item?._id)) {
+                toast.error(`${item.title} removed from favorites!`);
+              } else {
+                toast.success(`${item.title} added to favorites!`);
+              }
+            }}
             className="absolute top-4 right-4 text-zinc-500 w-5 h-5 hover:text-black cursor-pointer duration-200"
           />
           <div className="p-4 bg-zinc-100 group-hover:bg-zinc-50 group-hover:shadow-xl duration-300">
@@ -57,10 +57,10 @@ const Product = ({ products }: Item) => {
             </p>
             <div className="flex items-center justify-between text-sm mt-2">
               <button
-                // onClick={() => {
-                //   dispatch(addToCart(item)),
-                //     toast.success(`${item?.title} is added to Cart!`);
-                // }}
+                onClick={() => {
+                  dispatch(addToCart(item)),
+                    toast.success(`${item?.title} is added to Cart!`);
+                }}
                 className="uppercase font-semibold hover:text-designColor duration-300"
               >
                 Add to cart
@@ -75,7 +75,7 @@ const Product = ({ products }: Item) => {
           </div>
         </div>
       ))}
-      {/* <Toaster
+      <Toaster
         position="bottom-right"
         toastOptions={{
           style: {
@@ -83,7 +83,7 @@ const Product = ({ products }: Item) => {
             color: "#fff",
           },
         }}
-      /> */}
+      />
     </div>
   );
 };

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.5",
     "@types/react-slick": "^0.23.13",
     "clsx": "^2.1.1",
     "lucide-react": "^0.396.0",
@@ -16,7 +17,10 @@
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
+    "react-redux": "^9.1.2",
     "react-slick": "^0.30.2",
+    "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.3.0"
   },

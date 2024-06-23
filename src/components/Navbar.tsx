@@ -5,16 +5,16 @@ import { Heart, ShoppingBagIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/data";
 import { signIn, useSession } from "next-auth/react";
-// import { useSelector } from "react-redux";
-// import { StateProps } from "../../type";
+import { useSelector } from "react-redux";
+import { StateProps } from "../../type";
 
 const Navbar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
 
-  //   const { productData, favoriteData } = useSelector(
-  //     (state: StateProps) => state.pro
-  //   );
+  const { productData, favoriteData } = useSelector(
+    (state: StateProps) => state.pro
+  );
 
   return (
     <div className="w-full h-20 border-b-[1px] border-b-zinc-500 bg-white text-zinc-600 sticky top-0 z-50 bg-white/80 backdrop-blur-2xl">
@@ -48,7 +48,7 @@ const Navbar = () => {
           >
             <Heart className="w-7 h-7" />
             <span className="absolute top-0 -left-1 bg-zinc-800 text-zinc-200 w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-black font-semibold group-hover:text-white">
-              {/* {favoriteData ? favoriteData.length : 0} */}
+              {favoriteData ? favoriteData.length : 0}
             </span>
           </Link>
           <Link
@@ -57,7 +57,7 @@ const Navbar = () => {
           >
             <ShoppingBagIcon className="w-7 h-7" />
             <span className="absolute top-0 -left-1 bg-zinc-800 text-zinc-200 w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-black font-semibold group-hover:text-white">
-              {/* {productData ? productData.length : 0} */}
+              {productData ? productData.length : 0}
             </span>
           </Link>
           {session ? (
