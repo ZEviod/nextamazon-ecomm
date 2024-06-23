@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
+    "@stripe/stripe-js": "^4.0.0",
     "@types/react-slick": "^0.23.13",
     "clsx": "^2.1.1",
     "lucide-react": "^0.396.0",
@@ -22,12 +23,14 @@
     "react-slick": "^0.30.2",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
+    "stripe": "^15.12.0",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/stripe": "^8.0.417",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",

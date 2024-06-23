@@ -15,7 +15,7 @@ import FormattedPrice from "./FormattedPrice";
 import { calculatePercentage } from "@/helpers";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-// import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useSession } from "next-auth/react";
 
 const Cart = () => {
@@ -53,30 +53,29 @@ const Cart = () => {
   }, [productData]);
 
   //   Stripe Payment
-  const handleCheckout = () => {};
-  //   const stripePromise = loadStripe(
-  //     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-  //   );
-  //   const handleCheckout = async () => {
-  //     const stripe = await stripePromise;
-  //     const response = await fetch("http://localhost:3000/api/checkout", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         items: productData,
-  //         email: session?.user?.email,
-  //       }),
-  //     });
-  //     const data = await response.json();
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  );
+  const handleCheckout = async () => {
+    const stripe = await stripePromise;
+    const response = await fetch("http://localhost:3000/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items: productData,
+        email: session?.user?.email,
+      }),
+    });
+    const data = await response.json();
 
-  //     if (response.ok) {
-  //       // await dispatch(saveOrder({ order: productData, id: data.id }));
-  //       stripe?.redirectToCheckout({ sessionId: data.id });
-  //       // dispatch(resetCart());
-  //     } else {
-  //       throw new Error("Failed to create Stripe Payment");
-  //     }
-  //   };
+    if (response.ok) {
+      // await dispatch(saveOrder({ order: productData, id: data.id }));
+      stripe?.redirectToCheckout({ sessionId: data.id });
+      // dispatch(resetCart());
+    } else {
+      throw new Error("Failed to create Stripe Payment");
+    }
+  };
 
   return (
     <>
