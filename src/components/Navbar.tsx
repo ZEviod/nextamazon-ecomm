@@ -4,13 +4,13 @@ import Logo from "./Logo";
 import { Heart, ShoppingBagIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/constants/data";
-// import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 // import { useSelector } from "react-redux";
 // import { StateProps } from "../../type";
 
 const Navbar = () => {
   const pathname = usePathname();
-  //   const { data: session } = useSession();
+  const { data: session } = useSession();
 
   //   const { productData, favoriteData } = useSelector(
   //     (state: StateProps) => state.pro
@@ -60,23 +60,23 @@ const Navbar = () => {
               {/* {productData ? productData.length : 0} */}
             </span>
           </Link>
-          {/* {session ? ( */}
-          <Link
-            href={"/profile"}
-            className="hover:text-black cursor-pointer duration-200 relative overflow-hidden group text-sm uppercase font-semibold"
-          >
-            Profile
-            <span className="absolute h-[1px] w-full bg-blue-700 left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500" />
-          </Link>
-          {/* ) : ( */}
-          <button
-            //   onClick={() => signIn()}
-            className="hover:text-black cursor-pointer duration-200 relative overflow-hidden group text-sm uppercase font-semibold"
-          >
-            Login
-            <span className="absolute h-[1px] w-full bg-blue-700 left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500" />
-          </button>
-          {/* )} */}
+          {session ? (
+            <Link
+              href={"/profile"}
+              className="hover:text-black cursor-pointer duration-200 relative overflow-hidden group text-sm uppercase font-semibold"
+            >
+              Profile
+              <span className="absolute h-[1px] w-full bg-blue-700 left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500" />
+            </Link>
+          ) : (
+            <button
+              onClick={() => signIn()}
+              className="hover:text-black cursor-pointer duration-200 relative overflow-hidden group text-sm uppercase font-semibold"
+            >
+              Login
+              <span className="absolute h-[1px] w-full bg-blue-700 left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500" />
+            </button>
+          )}
         </div>
       </div>
     </div>
