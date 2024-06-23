@@ -5,6 +5,7 @@ const nextConfig = {
       "i.ibb.co",
       "lh3.googleusercontent.com",
       "avatars.githubusercontent.com",
+      "images.pexels.com",
     ],
   },
 };
