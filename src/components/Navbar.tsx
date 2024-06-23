@@ -3,16 +3,12 @@ import Link from "next/link";
 import Logo from "./Logo";
 import { Heart, ShoppingBagIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { navigation } from "@/constants/data";
+// import { signIn, useSession } from "next-auth/react";
+// import { useSelector } from "react-redux";
+// import { StateProps } from "../../type";
 
 const Navbar = () => {
-  const navigation = [
-    { _id: 910, title: "Home", href: "/" },
-    { _id: 911, title: "Phones", href: "/phones" },
-    { _id: 912, title: "Phone Cases", href: "/phonecases" },
-    { _id: 913, title: "Watches", href: "/watches" },
-    { _id: 914, title: "Accessories", href: "/accessories" },
-  ];
-
   const pathname = usePathname();
   //   const { data: session } = useSession();
 
