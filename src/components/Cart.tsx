@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 import { useSession } from "next-auth/react";
+import StripeCheckout from "react-stripe-checkout";
 
 const Cart = () => {
   const [totalAmt, setTotalAmt] = useState(0);
@@ -25,6 +26,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { data: session } = useSession();
+  const [payNow, setPayNow] = useState(false);
 
   const handleReset = () => {
     const confirmReset = window.confirm(
@@ -53,27 +55,34 @@ const Cart = () => {
   }, [productData]);
 
   //   Stripe Payment
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-  );
-  const handleCheckout = async () => {
-    const stripe = await stripePromise;
-    const response = await fetch("http://localhost:3000/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items: productData,
-        email: session?.user?.email,
-      }),
-    });
-    const data = await response.json();
+  // const stripePromise = loadStripe(
+  //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  // );
+  // const handleCheckout = async () => {
+  //   const stripe = await stripePromise;
+  //   const response = await fetch("http://localhost:3000/api/checkout", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       items: productData,
+  //       email: session?.user?.email,
+  //     }),
+  //   });
+  //   const data = await response.json();
 
-    if (response.ok) {
-      // await dispatch(saveOrder({ order: productData, id: data.id }));
-      stripe?.redirectToCheckout({ sessionId: data.id });
-      // dispatch(resetCart());
+  //   if (response.ok) {
+  //     // await dispatch(saveOrder({ order: productData, id: data.id }));
+  //     stripe?.redirectToCheckout({ sessionId: data.id });
+  //     // dispatch(resetCart());
+  //   } else {
+  //     throw new Error("Failed to create Stripe Payment");
+  //   }
+  // };
+  const handleCheckout = () => {
+    if (session) {
+      setPayNow(true);
     } else {
-      throw new Error("Failed to create Stripe Payment");
+      toast.error("Please sign in to checkout");
     }
   };
 
@@ -211,6 +220,19 @@ const Cart = () => {
             >
               Proceed to Checkout
             </button>
+            {payNow && (
+              <div className="w-ful mt-6 flex items-center justify-center">
+                <StripeCheckout
+                  stripeKey="pk_test_51OxfMpSE8SusuSkfehSsbnJdcu2L50ZWCVTb02iiu7eG7hc7eM7CfWGOi8eEw3Z0kXqlEr0OpcaWKOHTQGzn58Os00woAHsJUM"
+                  name="nextamazon"
+                  amount={totalAmt * 100}
+                  label="Pay to nextamazon"
+                  description={`Your Payment is $${totalAmt}`}
+                  token={(token) => console.log(token)}
+                  email={session?.user?.email || undefined}
+                />
+              </div>
+            )}
           </div>
         </div>
       ) : (
